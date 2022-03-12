@@ -60,7 +60,7 @@ public class CustomerService {
 
     public CustomerDto update(CustomerUpdateRequestDto customerUpdateRequestDto) {
 
-        contolIsCustomerExist(customerUpdateRequestDto);
+        controlIsCustomerExist(customerUpdateRequestDto);
 
         Customer customer;
         customer = CustomerMapper.INSTANCE.convertToCustomer(customerUpdateRequestDto);
@@ -73,7 +73,7 @@ public class CustomerService {
 
     }
 
-    private void contolIsCustomerExist(CustomerUpdateRequestDto customerUpdateRequestDto) {
+    private void controlIsCustomerExist(CustomerUpdateRequestDto customerUpdateRequestDto) {
 
         Long id = customerUpdateRequestDto.getId();
         boolean isExist = customerEntityService.existById(id);
