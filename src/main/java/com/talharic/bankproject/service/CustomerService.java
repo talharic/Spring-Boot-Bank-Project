@@ -60,20 +60,25 @@ public class CustomerService {
 
     public CustomerDto update(CustomerUpdateRequestDto customerUpdateRequestDto) {
 
-        Long id = customerUpdateRequestDto.getId();
-        boolean isExist = customerEntityService.existById(id);
+        contolIsCustomerExist(customerUpdateRequestDto);
 
         Customer customer;
-        if(isExist){
-            customer = CustomerMapper.INSTANCE.convertToCustomer(customerUpdateRequestDto);
-            customerEntityService.save(customer);
-        }else{
-            throw new ItemNotFoundException(CustomerErrorMessage.CUSTOMER_ERROR_MESSAGE);
-        }
+        customer = CustomerMapper.INSTANCE.convertToCustomer(customerUpdateRequestDto);
+        customerEntityService.save(customer);
 
         CustomerDto customerDto = CustomerMapper.INSTANCE.convertToCustomerDto(customer);
 
-        return  customerDto;
+        return customerDto;
 
+
+    }
+
+    private void contolIsCustomerExist(CustomerUpdateRequestDto customerUpdateRequestDto) {
+
+        Long id = customerUpdateRequestDto.getId();
+        boolean isExist = customerEntityService.existById(id);
+        if(!isExist){
+            throw new ItemNotFoundException(CustomerErrorMessage.CUSTOMER_ERROR_MESSAGE);
+        }
     }
 }
