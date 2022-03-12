@@ -29,7 +29,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     }
 
     @ExceptionHandler
-    public final ResponseEntity<Object> handleAllUserNotFoundException(UserNotFoundException ex, WebRequest webRequest){
+    public final ResponseEntity<Object> handleAllItemNotFoundException(ItemNotFoundException ex, WebRequest webRequest){
 
         Date errorDate = new Date();
         String message = ex.getMessage();
