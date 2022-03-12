@@ -2,6 +2,7 @@ package com.talharic.bankproject.service.entityservice;
 
 import com.talharic.bankproject.dto.CustomerDto;
 import com.talharic.bankproject.entity.Customer;
+import com.talharic.bankproject.exception.ItemNotFoundException;
 import com.talharic.bankproject.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,7 @@ public class CustomerEntityService {
         if(customerOptional.isPresent()){
             customer = customerOptional.get();
         }else{
-            throw new RuntimeException("Customer not found!");
+            throw new ItemNotFoundException("Customer not found!");
         }
         return customer;
     }
