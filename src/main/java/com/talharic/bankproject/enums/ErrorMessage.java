@@ -1,12 +1,12 @@
 package com.talharic.bankproject.enums;
 
-public enum CustomerErrorMessage implements BaseErrorMessage{
+public enum ErrorMessage implements BaseErrorMessage{
 
-    CUSTOMER_ERROR_MESSAGE("Customer not found!"),
+    ITEM_NOT_FOUND("Item not found!"),
     ;
 
     private String message;
-    CustomerErrorMessage(String message){
+    ErrorMessage(String message) {
         this.message = message;
     }
 

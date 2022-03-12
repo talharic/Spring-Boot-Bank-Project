@@ -1,10 +1,10 @@
 package com.talharic.bankproject.exception;
 
-import com.talharic.bankproject.enums.CustomerErrorMessage;
+import com.talharic.bankproject.enums.BaseErrorMessage;
 
 public class ItemNotFoundException extends  RuntimeException{
 
-    public ItemNotFoundException(CustomerErrorMessage message) {
+    public ItemNotFoundException(BaseErrorMessage message) {
         super(message.getMessage());
     }
 }
