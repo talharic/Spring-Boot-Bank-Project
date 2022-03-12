@@ -1,5 +1,6 @@
 package com.talharic.bankproject.service.entityservice;
 
+import com.talharic.bankproject.dto.CustomerDto;
 import com.talharic.bankproject.entity.Customer;
 import com.talharic.bankproject.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,5 +29,18 @@ public class CustomerEntityService {
 
     public void delete(Customer customer){
         customerRepository.delete(customer);
+    }
+
+    public Customer getByIdWithControl(Long id) {
+
+        Optional<Customer> customerOptional = findById(id);
+
+        Customer customer;
+        if(customerOptional.isPresent()){
+            customer = customerOptional.get();
+        }else{
+            throw new RuntimeException("Customer not found!");
+        }
+        return customer;
     }
 }

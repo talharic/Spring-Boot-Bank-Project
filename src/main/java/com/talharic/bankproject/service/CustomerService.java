@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -37,4 +38,22 @@ public class CustomerService {
 
         return customerDto;
     }
+
+    public void delete(Long id) {
+
+        Customer customer = customerEntityService.getByIdWithControl(id);
+
+        customerEntityService.delete(customer);
+    }
+
+    public CustomerDto findById(Long id){
+
+        Customer customer = customerEntityService.getByIdWithControl(id);
+
+        CustomerDto customerDto = CustomerMapper.INSTANCE.convertToCustomerDto(customer);
+
+        return customerDto;
+
+    }
+
 }

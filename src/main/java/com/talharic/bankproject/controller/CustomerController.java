@@ -25,11 +25,28 @@ public class CustomerController {
         return new ResponseEntity(customerDtoList, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity findById(@PathVariable Long id){
+
+        CustomerDto customerDto = customerService.findById(id);
+
+        return ResponseEntity.ok(customerDto);
+
+    }
+
     @PostMapping
     public ResponseEntity save(@RequestBody CustomerSaveRequestDto customerSaveRequestDto){
 
         CustomerDto customerDto = customerService.save(customerSaveRequestDto);
 
         return new ResponseEntity(customerDto, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable Long id){
+
+        customerService.delete(id);
+
+        return ResponseEntity.ok(Void.TYPE);
     }
 }
