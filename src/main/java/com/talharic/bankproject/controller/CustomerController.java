@@ -2,6 +2,7 @@ package com.talharic.bankproject.controller;
 
 import com.talharic.bankproject.dto.CustomerDto;
 import com.talharic.bankproject.dto.CustomerSaveRequestDto;
+import com.talharic.bankproject.dto.CustomerUpdateRequestDto;
 import com.talharic.bankproject.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -48,5 +49,13 @@ public class CustomerController {
         customerService.delete(id);
 
         return ResponseEntity.ok(Void.TYPE);
+    }
+
+    @PutMapping
+    public ResponseEntity update(@RequestBody CustomerUpdateRequestDto customerUpdateRequestDto){
+
+        CustomerDto customerDto = customerService.update(customerUpdateRequestDto);
+
+        return ResponseEntity.ok(customerDto);
     }
 }

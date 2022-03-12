@@ -4,13 +4,15 @@ import com.talharic.bankproject.converter.CustomerConverter;
 import com.talharic.bankproject.converter.CustomerMapper;
 import com.talharic.bankproject.dto.CustomerDto;
 import com.talharic.bankproject.dto.CustomerSaveRequestDto;
+import com.talharic.bankproject.dto.CustomerUpdateRequestDto;
 import com.talharic.bankproject.entity.Customer;
+import com.talharic.bankproject.enums.CustomerErrorMessage;
+import com.talharic.bankproject.exception.ItemNotFoundException;
 import com.talharic.bankproject.service.entityservice.CustomerEntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -56,4 +58,22 @@ public class CustomerService {
 
     }
 
+    public CustomerDto update(CustomerUpdateRequestDto customerUpdateRequestDto) {
+
+        Long id = customerUpdateRequestDto.getId();
+        boolean isExist = customerEntityService.existById(id);
+
+        Customer customer;
+        if(isExist){
+            customer = CustomerMapper.INSTANCE.convertToCustomer(customerUpdateRequestDto);
+            customerEntityService.save(customer);
+        }else{
+            throw new ItemNotFoundException(CustomerErrorMessage.CUSTOMER_ERROR_MESSAGE);
+        }
+
+        CustomerDto customerDto = CustomerMapper.INSTANCE.convertToCustomerDto(customer);
+
+        return  customerDto;
+
+    }
 }

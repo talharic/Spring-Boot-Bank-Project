@@ -1,7 +1,7 @@
 package com.talharic.bankproject.service.entityservice;
 
-import com.talharic.bankproject.dto.CustomerDto;
 import com.talharic.bankproject.entity.Customer;
+import com.talharic.bankproject.enums.CustomerErrorMessage;
 import com.talharic.bankproject.exception.ItemNotFoundException;
 import com.talharic.bankproject.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,8 +40,12 @@ public class CustomerEntityService {
         if(customerOptional.isPresent()){
             customer = customerOptional.get();
         }else{
-            throw new ItemNotFoundException("Customer not found!");
+            throw new ItemNotFoundException(CustomerErrorMessage.CUSTOMER_ERROR_MESSAGE);
         }
         return customer;
+    }
+
+    public boolean existById(Long id){
+        return customerRepository.existsById(id);
     }
 }
