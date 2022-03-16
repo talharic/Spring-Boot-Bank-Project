@@ -2,6 +2,7 @@ package com.talharic.bankproject.entity;
 
 import com.talharic.bankproject.enums.AccountType;
 import com.talharic.bankproject.enums.CurrencyType;
+import com.talharic.bankproject.enums.StatusType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,4 +35,8 @@ public class Account {
     @Enumerated(EnumType.STRING)
     @Column(name = "ACCOUNT_TYPE", length = 30)
     private AccountType accountType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS_TYPE", length = 30)
+    private StatusType statusType;
 }
