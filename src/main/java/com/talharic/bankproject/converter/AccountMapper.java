@@ -1,10 +1,8 @@
 package com.talharic.bankproject.converter;
 
-import com.talharic.bankproject.dto.AccountDto;
-import com.talharic.bankproject.dto.AccountSaveRequestDto;
-import com.talharic.bankproject.dto.MoneyTransferDto;
-import com.talharic.bankproject.dto.MoneyTransferSaveRequestDto;
+import com.talharic.bankproject.dto.*;
 import com.talharic.bankproject.entity.Account;
+import com.talharic.bankproject.entity.AccountActivity;
 import com.talharic.bankproject.entity.MoneyTransfer;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -26,4 +24,6 @@ public interface AccountMapper {
     MoneyTransfer convertToMoneyTransfer(MoneyTransferSaveRequestDto moneyTransferSaveRequestDto);
 
     MoneyTransferDto convertToMoneyTransferDto(MoneyTransfer moneyTransfer);
+
+    AccountActivityDto convertToAccountActivityDto(AccountActivity accountActivity);
 }

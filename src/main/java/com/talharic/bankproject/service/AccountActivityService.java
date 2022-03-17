@@ -1,5 +1,6 @@
 package com.talharic.bankproject.service;
 
+import com.talharic.bankproject.converter.AccountMapper;
 import com.talharic.bankproject.dto.AccountActivityDto;
 import com.talharic.bankproject.dto.MoneyWithdrawRequestDto;
 import com.talharic.bankproject.entity.Account;
@@ -21,7 +22,15 @@ public class AccountActivityService {
     private final AccountActivityEntityService accountActivityEntityService;
 
     public AccountActivityDto withdraw(MoneyWithdrawRequestDto moneyWithdrawRequestDto) {
-        return null;
+
+        Long accountId = moneyWithdrawRequestDto.getAccountId();
+        BigDecimal amount = moneyWithdrawRequestDto.getAmount();
+
+        AccountActivity accountActivity = moneyOut(accountId, amount);
+
+        AccountActivityDto accountActivityDto = AccountMapper.INSTANCE.convertToAccountActivityDto(accountActivity);
+
+        return accountActivityDto;
     }
 
     public AccountActivity moneyOut(Long accountId, BigDecimal amount) {
