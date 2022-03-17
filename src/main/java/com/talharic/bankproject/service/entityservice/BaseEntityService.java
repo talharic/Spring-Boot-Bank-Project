@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class BaseEntityService<E, R extends JpaRepository<E, Long>> {
+public abstract class BaseEntityService<E, R extends JpaRepository<E, Long>> {
 
     private final R repository;
 

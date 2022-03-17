@@ -75,7 +75,7 @@ public class CustomerService {
     private void controlIsCustomerExist(CustomerUpdateRequestDto customerUpdateRequestDto) {
 
         Long id = customerUpdateRequestDto.getId();
-        boolean isExist = customerEntityService.existById(id);
+        boolean isExist = customerEntityService.existsById(id);
         if(!isExist){
             throw new ItemNotFoundException(CustomerErrorMessage.CUSTOMER_ERROR_MESSAGE);
         }
