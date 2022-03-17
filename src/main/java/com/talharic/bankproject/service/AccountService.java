@@ -4,6 +4,7 @@ import com.talharic.bankproject.converter.AccountMapper;
 import com.talharic.bankproject.dto.AccountDto;
 import com.talharic.bankproject.dto.AccountSaveRequestDto;
 import com.talharic.bankproject.entity.Account;
+import com.talharic.bankproject.enums.StatusType;
 import com.talharic.bankproject.service.entityservice.AccountEntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,10 @@ public class AccountService {
     }
 
     public void cancel(Long accountId) {
+
         Account account = accountEntityService.getByIdWithControl(accountId);
-        account.s
+        account.setStatusType(StatusType.PASSIVE);
+
+        accountEntityService.save(account);
     }
 }

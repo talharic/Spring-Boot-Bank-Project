@@ -9,5 +9,4 @@ public class MoneyWithdrawRequestDto {
 
     private Long accountId;
     private BigDecimal amount;
-
 }
