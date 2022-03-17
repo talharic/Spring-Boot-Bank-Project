@@ -60,9 +60,17 @@ public class AccountController {
     }
 
     @PostMapping("/withdraw")
-    public ResponseEntity withdraw(@RequestBody MoneyWithdrawRequestDto moneyWithdrawRequestDto){
+    public ResponseEntity withdraw(@RequestBody MoneyActivityRequestDto moneyActivityRequestDto){
 
-        AccountActivityDto accountActivityDto = accountActivityService.withdraw(moneyWithdrawRequestDto);
+        AccountActivityDto accountActivityDto = accountActivityService.withdraw(moneyActivityRequestDto);
+
+        return ResponseEntity.ok(accountActivityDto);
+    }
+
+    @PostMapping("/deposit")
+    public ResponseEntity deposit(@RequestBody MoneyActivityRequestDto moneyActivityRequestDto){
+
+        AccountActivityDto accountActivityDto = accountActivityService.deposit(moneyActivityRequestDto);
 
         return ResponseEntity.ok(accountActivityDto);
     }

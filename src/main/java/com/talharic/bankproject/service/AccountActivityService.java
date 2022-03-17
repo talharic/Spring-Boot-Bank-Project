@@ -2,7 +2,7 @@ package com.talharic.bankproject.service;
 
 import com.talharic.bankproject.converter.AccountMapper;
 import com.talharic.bankproject.dto.AccountActivityDto;
-import com.talharic.bankproject.dto.MoneyWithdrawRequestDto;
+import com.talharic.bankproject.dto.MoneyActivityRequestDto;
 import com.talharic.bankproject.entity.Account;
 import com.talharic.bankproject.entity.AccountActivity;
 import com.talharic.bankproject.enums.AccountActivityType;
@@ -21,19 +21,31 @@ public class AccountActivityService {
     private final AccountEntityService accountEntityService;
     private final AccountActivityEntityService accountActivityEntityService;
 
-    public AccountActivityDto withdraw(MoneyWithdrawRequestDto moneyWithdrawRequestDto) {
+    public AccountActivityDto withdraw(MoneyActivityRequestDto moneyWithdrawRequestDto) {
 
         Long accountId = moneyWithdrawRequestDto.getAccountId();
         BigDecimal amount = moneyWithdrawRequestDto.getAmount();
 
-        AccountActivity accountActivity = moneyOut(accountId, amount);
+        AccountActivity accountActivity = moneyOut(accountId, amount, AccountActivityType.WITHDRAW);
 
         AccountActivityDto accountActivityDto = AccountMapper.INSTANCE.convertToAccountActivityDto(accountActivity);
 
         return accountActivityDto;
     }
 
-    public AccountActivity moneyOut(Long accountId, BigDecimal amount) {
+    public AccountActivityDto deposit(MoneyActivityRequestDto moneyWithdrawRequestDto) {
+
+        Long accountId = moneyWithdrawRequestDto.getAccountId();
+        BigDecimal amount = moneyWithdrawRequestDto.getAmount();
+
+        AccountActivity accountActivity = moneyIn(accountId, amount, AccountActivityType.DEPOSIT);
+
+        AccountActivityDto accountActivityDto = AccountMapper.INSTANCE.convertToAccountActivityDto(accountActivity);
+
+        return accountActivityDto;
+    }
+
+    public AccountActivity moneyOut(Long accountId, BigDecimal amount, AccountActivityType accountActivityType) {
 
         Account account = accountEntityService.getByIdWithControl(accountId);
 
@@ -41,20 +53,20 @@ public class AccountActivityService {
 
         validateBalance(newBalance);
 
-        AccountActivity accountActivity = createAccountActivity(accountId, amount, newBalance, AccountActivityType.SEND);
+        AccountActivity accountActivity = createAccountActivity(accountId, amount, newBalance, accountActivityType);
 
         updateCurrentBalance(account, newBalance);
 
         return accountActivity;
     }
 
-    public AccountActivity moneyIn(Long accountId, BigDecimal amount) {
+    public AccountActivity moneyIn(Long accountId, BigDecimal amount, AccountActivityType accountActivityType) {
 
         Account account = accountEntityService.getByIdWithControl(accountId);
 
         BigDecimal newBalance = account.getCurrentBalance().add(amount);
 
-        AccountActivity accountActivity = createAccountActivity(accountId, amount, newBalance, AccountActivityType.GET);
+        AccountActivity accountActivity = createAccountActivity(accountId, amount, newBalance, accountActivityType);
 
         updateCurrentBalance(account, newBalance);
 
