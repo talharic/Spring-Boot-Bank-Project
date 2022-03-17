@@ -40,6 +40,8 @@ public class AccountService {
 
         Account account = AccountMapper.INSTANCE.convertToAccount(accountSaveRequestDto);
 
+        account.setStatusType(StatusType.ACTIVE);
+
         account  = accountEntityService.save(account);
 
         AccountDto accountDto = AccountMapper.INSTANCE.convertToAccountDto(account);
