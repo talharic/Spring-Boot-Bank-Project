@@ -6,6 +6,8 @@ import com.talharic.bankproject.dto.MoneyActivityRequestDto;
 import com.talharic.bankproject.entity.Account;
 import com.talharic.bankproject.entity.AccountActivity;
 import com.talharic.bankproject.enums.AccountActivityType;
+import com.talharic.bankproject.enums.AccountErrorMessage;
+import com.talharic.bankproject.exception.BusinessException;
 import com.talharic.bankproject.service.entityservice.AccountActivityEntityService;
 import com.talharic.bankproject.service.entityservice.AccountEntityService;
 import lombok.RequiredArgsConstructor;
@@ -91,7 +93,7 @@ public class AccountActivityService {
 
     private void validateBalance(BigDecimal newBalance) {
         if(newBalance.compareTo(BigDecimal.ZERO) < 0){
-            throw new RuntimeException("insufficient balance!");
+            throw new BusinessException(AccountErrorMessage.INSUFFICIENT_BALANCE);
         }
     }
 }

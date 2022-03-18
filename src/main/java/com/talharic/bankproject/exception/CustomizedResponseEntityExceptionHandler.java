@@ -40,6 +40,18 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleAllBusinessException(BusinessException ex, WebRequest webRequest){
+
+        Date errorDate = new Date();
+        String message = ex.getBaseErrorMessage().getMessage();
+        String description = webRequest.getDescription(false);
+
+        ExceptionResponse exceptionResponse = new ExceptionResponse(errorDate, message, description);
+
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
