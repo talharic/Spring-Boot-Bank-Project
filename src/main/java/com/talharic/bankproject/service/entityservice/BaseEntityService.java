@@ -1,5 +1,6 @@
 package com.talharic.bankproject.service.entityservice;
 
+import com.talharic.bankproject.entity.BaseEntity;
 import com.talharic.bankproject.enums.ErrorMessage;
 import com.talharic.bankproject.exception.ItemNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +12,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public abstract class BaseEntityService<E, R extends JpaRepository<E, Long>> {
+public abstract class BaseEntityService<E extends BaseEntity, R extends JpaRepository<E, Long>> {
 
     private final R repository;
 
