@@ -3,6 +3,7 @@ package com.talharic.bankproject.controller;
 import com.talharic.bankproject.dto.CustomerDto;
 import com.talharic.bankproject.dto.CustomerSaveRequestDto;
 import com.talharic.bankproject.dto.CustomerUpdateRequestDto;
+import com.talharic.bankproject.dto.RestResponse;
 import com.talharic.bankproject.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class CustomerController {
 
         List<CustomerDto> customerDtoList = customerService.findAll();
 
-        return new ResponseEntity(customerDtoList, HttpStatus.OK);
+        return ResponseEntity.ok(RestResponse.of(customerDtoList));
     }
 
     @GetMapping("/{id}")
@@ -31,7 +32,7 @@ public class CustomerController {
 
         CustomerDto customerDto = customerService.findById(id);
 
-        return ResponseEntity.ok(customerDto);
+        return ResponseEntity.ok(RestResponse.of(customerDto));
 
     }
 
@@ -48,7 +49,7 @@ public class CustomerController {
 
         customerService.delete(id);
 
-        return ResponseEntity.ok(Void.TYPE);
+        return ResponseEntity.ok(RestResponse.empty());
     }
 
     @PutMapping
@@ -56,6 +57,6 @@ public class CustomerController {
 
         CustomerDto customerDto = customerService.update(customerUpdateRequestDto);
 
-        return ResponseEntity.ok(customerDto);
+        return ResponseEntity.ok(RestResponse.of(customerDto));
     }
 }

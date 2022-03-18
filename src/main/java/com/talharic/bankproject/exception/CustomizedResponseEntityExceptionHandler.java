@@ -1,5 +1,6 @@
 package com.talharic.bankproject.exception;
 
+import com.talharic.bankproject.dto.RestResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,19 +26,25 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
         ExceptionResponse exceptionResponse = new ExceptionResponse(errorDate, message, description);
 
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        RestResponse<ExceptionResponse> restResponse = RestResponse.error(exceptionResponse);
+        restResponse.setMessages(message);
+
+        return new ResponseEntity<>(RestResponse.error(exceptionResponse), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler
     public final ResponseEntity<Object> handleAllItemNotFoundException(ItemNotFoundException ex, WebRequest webRequest){
 
         Date errorDate = new Date();
-        String message = ex.getMessage();
+        String message = ex.getBaseErrorMessage().getMessage();
         String description = webRequest.getDescription(false);
 
         ExceptionResponse exceptionResponse = new ExceptionResponse(errorDate, message, description);
 
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+        RestResponse<ExceptionResponse> restResponse = RestResponse.error(exceptionResponse);
+        restResponse.setMessages(message);
+
+        return new ResponseEntity<>(RestResponse.error(exceptionResponse), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
@@ -49,7 +56,10 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
         ExceptionResponse exceptionResponse = new ExceptionResponse(errorDate, message, description);
 
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+        RestResponse<ExceptionResponse> restResponse = RestResponse.error(exceptionResponse);
+        restResponse.setMessages(message);
+
+        return new ResponseEntity<>(RestResponse.error(exceptionResponse), HttpStatus.NOT_FOUND);
     }
 
     @Override
@@ -59,8 +69,11 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         String message = "Validation failed!";
         String description = ex.getBindingResult().toString();
 
-        ExceptionResponse genExceptionResponse = new ExceptionResponse(errorDate, message, description);
+        ExceptionResponse exceptionResponse = new ExceptionResponse(errorDate, message, description);
 
-        return new ResponseEntity<>(genExceptionResponse, HttpStatus.BAD_REQUEST);
+        RestResponse<ExceptionResponse> restResponse = RestResponse.error(exceptionResponse);
+        restResponse.setMessages(message);
+
+        return new ResponseEntity<>(RestResponse.error(exceptionResponse), HttpStatus.BAD_REQUEST);
     }
 }
