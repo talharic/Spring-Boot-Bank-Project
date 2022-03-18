@@ -16,11 +16,11 @@ import java.util.Date;
 @Setter
 public class BaseAdditionalFields {
 
-    @Column(name = "CREATE_DATE", nullable = false, updatable = false)
+    @Column(name = "CREATE_DATE", updatable = false)
     @CreatedDate
     private Date createDate;
 
-    @Column(name = "UPDATE_DATE", nullable = false)
+    @Column(name = "UPDATE_DATE")
     @LastModifiedDate
     private Date updateDate;
 

@@ -1,5 +1,6 @@
 package com.talharic.bankproject.service.entityservice;
 
+import com.talharic.bankproject.entity.BaseAdditionalFields;
 import com.talharic.bankproject.entity.BaseEntity;
 import com.talharic.bankproject.enums.ErrorMessage;
 import com.talharic.bankproject.exception.ItemNotFoundException;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +27,29 @@ public abstract class BaseEntityService<E extends BaseEntity, R extends JpaRepos
     }
 
     public E save(E entity){
-        return repository.save(entity);
+
+        setAdditionalFields(entity);
+
+        entity = repository.save(entity);
+        
+        return entity;
+    }
+
+    private void setAdditionalFields(E entity) {
+
+        BaseAdditionalFields baseAdditionalFields = entity.getBaseAdditionalFields();
+
+        Long currentCustomerId = getCurrentCustomerId();
+
+        if(baseAdditionalFields == null){
+            baseAdditionalFields = new BaseAdditionalFields();
+            entity.setBaseAdditionalFields(baseAdditionalFields);
+        }
+
+        if(entity.getId() == null){
+            baseAdditionalFields.setCreateDate(new Date());
+            baseAdditionalFields.setCreateBy(currentCustomerId);
+        }
     }
 
     public void delete(E entity){
@@ -52,5 +76,12 @@ public abstract class BaseEntityService<E extends BaseEntity, R extends JpaRepos
 
     public R getRepository() {
         return repository;
+    }
+
+    // TODO: control after jwt
+    private Long getCurrentCustomerId() {
+
+        Long currentCustomer = null;
+        return currentCustomer;
     }
 }
