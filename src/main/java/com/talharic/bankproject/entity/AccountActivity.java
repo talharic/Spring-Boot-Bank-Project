@@ -12,7 +12,7 @@ import java.util.Date;
 @Table(name = "ACCOUNT_ACTIVITY")
 @Getter
 @Setter
-public class AccountActivity {
+public class AccountActivity extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -12,7 +12,7 @@ import java.util.Date;
 @Table(name = "MONEY_TRANSFER")
 @Setter
 @Getter
-public class MoneyTransfer {
+public class MoneyTransfer extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

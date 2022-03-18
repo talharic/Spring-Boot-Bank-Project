@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Table(name = "ACCOUNT")
 @Getter
 @Setter
-public class Account {
+public class Account extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
